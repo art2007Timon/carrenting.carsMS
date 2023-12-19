@@ -23,7 +23,7 @@ public class CarController {
     // обрабатывает POST-запросы для добавления новых автомобилей.
     //POST: JSON: {"id": 7, "marke": "Honda", "modell": "Accord",    "kennzeichen": "HA1234",   "reserved": false,   "kilometerstand": 22000 }
     @PostMapping//JSON
-    public ResponseEntity<Car> addCar(@RequestBody Car car) {
+    public ResponseEntity<Car> addCar(@RequestBody Car car) {   //@RequestBody для входящих JSON данных //ResponseEntity<T> для возвращаемых JSON данных
         Car newCar = carManager.addCar(car);
         return ResponseEntity.ok(newCar);
     }
@@ -37,10 +37,11 @@ public class CarController {
 
 
     //обрабатывает PUT-запросы для обновления информации об автомобиле.
-    //PUT: http://localhost:8080/api/cars/HA1234?reserved=true&kilometerstand=77777
+    //PUT: http://localhost:8080/api/cars/FRM10
+    //{ "kennzeichen": "FRM10", "kilometerstand": 25000, "reserved": true }
     @PutMapping("/{kennzeichen}")
     public ResponseEntity<Car> updateCar(@PathVariable String kennzeichen, @RequestBody Car car) {
-        Car updatedCar = carManager.updateCar(kennzeichen, car.getReserved(), car.getKilometerstand());
+        Car updatedCar = carManager.updateCar(kennzeichen, car);
         return ResponseEntity.ok(updatedCar);
     }
 

@@ -18,7 +18,7 @@ public class Car {
     private int kilometerstand;
 
     // Конструкторы
-    public Car() {    }
+    public Car() {}
 
     public Car(String marke, String modell, String kennzeichen, boolean reserved, int kilometerstand) {
         this.marke = marke;

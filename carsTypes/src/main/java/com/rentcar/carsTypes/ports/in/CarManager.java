@@ -9,8 +9,7 @@ public interface CarManager {
     Car addCar(Car car);
     List<Car> getAllCars();
 
-    Car updateCar(String kennzeichen, Boolean reserved, Integer kilometerstand);
-
+    Car updateCar(String kennzeichen, Car car);
     void deleteCarByKennzeichen(String kennzeichen);
 
     Optional<Car> getCar(String kennzeichen);

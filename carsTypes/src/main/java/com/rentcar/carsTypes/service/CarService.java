@@ -17,30 +17,30 @@ public class CarService implements CarManager {
     private CarRepository carRepository;
 
     @Override
-    @Transactional  //используется для обозначения методов, которые должны выполняться в рамках транзакции.
+    @Transactional  //Entweder Transaktion durchgefuehrt oder Rollback (Falls Fehler auftritt)
     public Car addCar(Car car) {
         return carRepository.save(car);
     }
 
     @Override
-    @Transactional(readOnly = true) //используется для методов, которые только читают данные и не изменяют их
+    @Transactional(readOnly = true) //nur beim Lesen
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
 
     @Override
-    //@Transactional
-    public Car updateCar(String kennzeichen, Boolean reserved, Integer kilometerstand) {
-        Car car = carRepository.findByKennzeichen(kennzeichen).orElseThrow(() -> new RuntimeException("Car not found"));
+    public Car updateCar(String kennzeichen, Car updatedCarData) {
+        Car existingCar = carRepository.findByKennzeichen(kennzeichen)
+                .orElseThrow(() -> new RuntimeException("Car not found"));
 
-        if (reserved != null) {
-            car.setReservation(reserved);
-        }
-        if (kilometerstand != null) {
-            car.setKilometerstand(kilometerstand);
-        }
-        return carRepository.save(car);
+        // Обновление данных автомобиля
+        existingCar.setKilometerstand(updatedCarData.getKilometerstand());
+        existingCar.setReservation(updatedCarData.getReserved());
+
+        return carRepository.save(existingCar);
     }
+
+
 
     @Override
     @Transactional
