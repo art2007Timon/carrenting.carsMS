@@ -4,23 +4,24 @@ import com.rentcar.carsTypes.ports.data.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-// JpaRepository: упрощения операций с базой данных, обеспечивая встроенную поддержку сортировки, а также автоматическую генерацию запросов на основе имен методов.
-//Методы JpaRepository генерируют запросы к базам данных
+ //CarRepository предоставляет методы для взаимодействия с базой данных для сущности Car.
+
 public interface CarRepository extends JpaRepository<Car, Long> {
-    // Метод для поиска автомобилей по марке
+    // Удалить автомобиль по регистрационному номеру (kennzeichen)
+    void deleteByKennzeichen(String kennzeichen);
+
+    Optional<Car> findByKennzeichen(String kennzeichen);
+
+
+    //-----------------[OPTIONAL]----------------------------------------------
+
     List<Car> findByMarke(String marke);
 
-    // Метод для поиска автомобилей по модели
     List<Car> findByModell(String modell);
 
-    // Метод для поиска автомобилей по их регистрационному номеру
-    Car findByKennzeichen(String kennzeichen);
+/*  Car findByKennzeichen(String kennzeichen);*/
 
-    // Метод для поиска автомобилей по статусу резервирования
     List<Car> findByReserved(boolean reserved);
-
-    // Метод для поиска автомобилей по id
-    Car findById(long id);
-
 }
