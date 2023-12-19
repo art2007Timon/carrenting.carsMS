@@ -16,9 +16,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2ZUKjmXAlnRsZTEkoh9XEVdPLAL" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -30,11 +30,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Art2007/Documents/GitHub/carrenting.carsMS/carsTypes",
+    "last_opened_file_path": "C:/Users/Art2007/Documents/GitHub/carrenting.carsMS",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn test" />
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="CarsTypesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="carsTypes" />
@@ -53,6 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1702471354261</updated>
       <workItem from="1702471355295" duration="37000" />
+      <workItem from="1702817790838" duration="90000" />
     </task>
     <servers />
   </component>

@@ -5,6 +5,7 @@ import com.rentcar.carsTypes.ports.in.CarManager;
 import com.rentcar.carsTypes.ports.out.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,30 +17,40 @@ public class CarService implements CarManager {
     private CarRepository carRepository;
 
     @Override
+    @Transactional  //используется для обозначения методов, которые должны выполняться в рамках транзакции.
     public Car addCar(Car car) {
         return carRepository.save(car);
     }
 
     @Override
+    @Transactional(readOnly = true) //используется для методов, которые только читают данные и не изменяют их
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
 
     @Override
-    public Car getCarById(Long id) {
-        Optional<Car> car = carRepository.findById(id);
-        return car.orElseThrow(() -> new RuntimeException("Car not found"));
-    }
+    //@Transactional
+    public Car updateCar(String kennzeichen, Boolean reserved, Integer kilometerstand) {
+        Car car = carRepository.findByKennzeichen(kennzeichen).orElseThrow(() -> new RuntimeException("Car not found"));
 
-    @Override
-    public Car updateCar(Long id, Car updatedCar) {
-        Car car = getCarById(id);
-        // Обновление атрибутов car с атрибутами updatedCar
+        if (reserved != null) {
+            car.setReservation(reserved);
+        }
+        if (kilometerstand != null) {
+            car.setKilometerstand(kilometerstand);
+        }
         return carRepository.save(car);
     }
 
     @Override
-    public void deleteCar(Long id) {
-        carRepository.deleteById(id);
+    @Transactional
+    public void deleteCarByKennzeichen(String kennzeichen) {
+        carRepository.deleteByKennzeichen(kennzeichen);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Car> getCar(String kennzeichen) {
+       return carRepository.findByKennzeichen(kennzeichen);
     }
 }

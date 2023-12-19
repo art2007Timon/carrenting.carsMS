@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -20,7 +21,8 @@ public class CarController {
     }
 
     // обрабатывает POST-запросы для добавления новых автомобилей.
-    @PostMapping
+    //POST: JSON: {"id": 7, "marke": "Honda", "modell": "Accord",    "kennzeichen": "HA1234",   "reserved": false,   "kilometerstand": 22000 }
+    @PostMapping//JSON
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         Car newCar = carManager.addCar(car);
         return ResponseEntity.ok(newCar);
@@ -33,24 +35,30 @@ public class CarController {
         return ResponseEntity.ok(cars);
     }
 
-    //обрабатывает GET-запросы для получения информации об определенном автомобиле по его идентификатору.
-    @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable Long id) {
-        Car car = carManager.getCarById(id);
-        return ResponseEntity.ok(car);
-    }
 
     //обрабатывает PUT-запросы для обновления информации об автомобиле.
-    @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car car) {
-        Car updatedCar = carManager.updateCar(id, car);
+    //PUT: http://localhost:8080/api/cars/HA1234?reserved=true&kilometerstand=77777
+    @PutMapping("/{kennzeichen}")
+    public ResponseEntity<Car> updateCar(@PathVariable String kennzeichen, @RequestBody Car car) {
+        Car updatedCar = carManager.updateCar(kennzeichen, car.getReserved(), car.getKilometerstand());
         return ResponseEntity.ok(updatedCar);
     }
 
-    //обрабатывает DELETE-запросы для удаления автомобиля.
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
-        carManager.deleteCar(id);
+    //DELETE: http://localhost:8080/api/cars/HA1234
+    @DeleteMapping("/{kennzeichen}")
+    public ResponseEntity<Void> deleteCar(@PathVariable String kennzeichen) {
+        carManager.deleteCarByKennzeichen(kennzeichen);
         return ResponseEntity.ok().build();
+    }
+
+    //GET: http://localhost:8080/api/cars/HA1234
+    @GetMapping("/{kennzeichen}")
+    public ResponseEntity<Car> getCar(@PathVariable String kennzeichen) {
+        Optional<Car> car = carManager.getCar(kennzeichen);
+        if (car.isPresent()) {
+            return ResponseEntity.ok(car.get());
+        } else {
+            return ResponseEntity.notFound().build();   //Not Found
+        }
     }
 }

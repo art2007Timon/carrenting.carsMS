@@ -18,8 +18,7 @@ public class Car {
     private int kilometerstand;
 
     // Конструкторы
-    public Car() {
-    }
+    public Car() {    }
 
     public Car(String marke, String modell, String kennzeichen, boolean reserved, int kilometerstand) {
         this.marke = marke;
@@ -50,6 +49,9 @@ public class Car {
         this.kennzeichen = kennzeichen;
     }
 
+
+
+
     // Getters_Setters
     public Long getId() {
         return id;
@@ -60,9 +62,10 @@ public class Car {
     }
 
     //Reservierungsstatus
-    public boolean isReserved() {
+    public boolean getReserved() {
         return reserved;
     }
+
 
     //reservieren
     public void setReservation( boolean bul) {
