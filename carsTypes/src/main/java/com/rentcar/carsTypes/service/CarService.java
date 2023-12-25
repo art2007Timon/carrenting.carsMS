@@ -17,7 +17,7 @@ public class CarService implements CarManager {
     private CarRepository carRepository;
 
     @Override
-    @Transactional  //Entweder Transaktion durchgefuehrt oder Rollback (Falls Fehler auftritt)
+    @Transactional                  //Entweder Transaktion durchgefuehrt oder Rollback (Falls Fehler auftritt)
     public Car addCar(Car car) {
         return carRepository.save(car);
     }
@@ -31,16 +31,14 @@ public class CarService implements CarManager {
     @Override
     public Car updateCar(String kennzeichen, Car updatedCarData) {
         Car existingCar = carRepository.findByKennzeichen(kennzeichen)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElseThrow(() -> new RuntimeException("Car not found"));  //Exeption falls das Auto nich gefunden wurde
 
-        // Обновление данных автомобиля
+        // Autodaten update
         existingCar.setKilometerstand(updatedCarData.getKilometerstand());
         existingCar.setReservation(updatedCarData.getReserved());
 
         return carRepository.save(existingCar);
     }
-
-
 
     @Override
     @Transactional

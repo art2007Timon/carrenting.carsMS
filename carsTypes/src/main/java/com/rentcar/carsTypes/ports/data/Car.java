@@ -6,10 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 
-@Entity
+@Entity         //eine Klasse ist eine JPA-Entität, was bedeutet, dass sie direkt mit einer Tabelle in der Datenbank übereinstimmt.
 public class Car {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id         //ID ist der Primärschlüssel dieser Entität.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Definiert eine Strategie zur Identitätsgenerierung. In diesem Fall wird IDENTITY verwendet, was bedeutet, dass die ID automatisch von der Datenbank generiert wird.
     private Long id;
     private String marke;
     private String modell;
@@ -17,9 +17,10 @@ public class Car {
     private boolean reserved;
     private int kilometerstand;
 
-    // Конструкторы
+    // [Konstruktor]
     public Car() {}
 
+    // Konstruktor
     public Car(String marke, String modell, String kennzeichen, boolean reserved, int kilometerstand) {
         this.marke = marke;
         this.modell = modell;
@@ -28,10 +29,36 @@ public class Car {
         this.kilometerstand = kilometerstand;
     }
 
+    // [Getters_Setters]
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    //Reservierungsstatus
+    public boolean getReserved() {
+        return reserved;
+    }
+
+    public void setReservation( boolean bul) {
+        this.reserved = bul;
+    }
+
+    public int getKilometerstand() {
+        return kilometerstand;
+    }
+
+    public void setKilometerstand(int kilometerstand) {
+        this.kilometerstand = kilometerstand;
+    }
+
     public String getMarke() {
         return marke;
     }
-      public void setMarke(String marke) {
+    public void setMarke(String marke) {
         this.marke = marke;
     }
 
@@ -49,43 +76,4 @@ public class Car {
         this.kennzeichen = kennzeichen;
     }
 
-
-
-
-    // Getters_Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    //Reservierungsstatus
-    public boolean getReserved() {
-        return reserved;
-    }
-
-
-    //reservieren
-    public void setReservation( boolean bul) {
-        this.reserved = bul;
-    }
-
-    public int getKilometerstand() {
-        return kilometerstand;
-    }
-
-    public void setKilometerstand(int kilometerstand) {
-        this.kilometerstand = kilometerstand;
-    }
 }
-
-/*
-    Экспликация аннотаций JPA:
-@Entity: Эта аннотация указывает, что класс является сущностью JPA, что означает его прямое соответствие
-        таблице в базе данных.
-@Id: Указывает, что поле id является первичным ключом этой сущности.
-@GeneratedValue(strategy = GenerationType.IDENTITY): Определяет стратегию генерации идентификаторов.
-        В данном случае используется IDENTITY, что означает, что идентификатор будет генерироваться
-        автоматически средствами базы данных.*/
