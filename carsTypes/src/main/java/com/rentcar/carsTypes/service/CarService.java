@@ -23,32 +23,29 @@ public class CarService implements CarManager {
     }
 
     @Override
-    @Transactional(readOnly = true) //nur beim Lesen
+    @Transactional(readOnly = true)
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
 
     @Override
-    public Car updateCar(String kennzeichen, Car updatedCarData) {
-        Car existingCar = carRepository.findByKennzeichen(kennzeichen)
-                .orElseThrow(() -> new RuntimeException("Car not found"));  //Exeption falls das Auto nich gefunden wurde
+    public Car updateCar(String licensePlate, Car updatedCarData) {
+        Car existingCar = carRepository.findByLicensePlate(licensePlate)
+                .orElseThrow(() -> new RuntimeException("Car not found"));
 
-        // Autodaten update
-        existingCar.setKilometerstand(updatedCarData.getKilometerstand());
-        existingCar.setReservation(updatedCarData.getReserved());
-
+        existingCar.setMileage(updatedCarData.getMileage());
         return carRepository.save(existingCar);
     }
 
     @Override
     @Transactional
-    public void deleteCarByKennzeichen(String kennzeichen) {
-        carRepository.deleteByKennzeichen(kennzeichen);
+    public void deleteCarByLicensePlate(String licensePlate) {
+        carRepository.deleteByLicensePlate(licensePlate);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Car> getCar(String kennzeichen) {
-       return carRepository.findByKennzeichen(kennzeichen);
+    public Optional<Car> getCar(String licensePlate) {
+        return carRepository.findByLicensePlate(licensePlate);
     }
 }

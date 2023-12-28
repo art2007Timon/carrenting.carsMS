@@ -20,46 +20,42 @@ public class CarController {
         this.carManager = carManager;
     }
 
-    //POST: http://localhost:8080/api/cars
-    //JSON: {"id": 7, "marke": "Honda", "modell": "Accord",    "kennzeichen": "HA1234",   "reserved": false,   "kilometerstand": 22000 }
-    @PostMapping//JSON
-    public ResponseEntity<Car> addCar(@RequestBody Car car) {   //@RequestBody для входящих JSON данных, которые вводим в body в postman //ResponseEntity<T> для возвращаемых JSON данных
-        Car newCar = carManager.addCar(car);
-        return ResponseEntity.ok(newCar);
-    }
-
     //GET: http://localhost:8080/api/cars
     @GetMapping
     public ResponseEntity<List<Car>> getAllCars() {
         List<Car> cars = carManager.getAllCars();
         return ResponseEntity.ok(cars);
     }
+    //GET: http://localhost:8080/api/cars/RRKHM777
+    @GetMapping("/{licensePlate}")
+    public ResponseEntity<Car> getCar(@PathVariable String licensePlate) {
+        Optional<Car> car = carManager.getCar(licensePlate);
+        return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
 
+    //POST: http://localhost:8080/api/cars
+    //JSON: {"licensePlate": "RRKHM777","mileage": 1400,"brand": "PEUGOT","model": "311"} or with carID -> "carID" : 1
+    @PostMapping//JSON
+    public ResponseEntity<Car> addCar(@RequestBody Car car) {
+        Car newCar = carManager.addCar(car);
+        return ResponseEntity.ok(newCar);
+    }
 
-    //PUT: http://localhost:8080/api/cars/FRM10
-    //JSON: { "kennzeichen": "FRM10", "kilometerstand": 25000, "reserved": true }
-    @PutMapping("/{kennzeichen}")
-    public ResponseEntity<Car> updateCar(@PathVariable String kennzeichen, @RequestBody Car car) {
-        Car updatedCar = carManager.updateCar(kennzeichen, car);
+
+    //PUT: http://localhost:8080/api/cars/RRKHM777
+    //JSON: {"licensePlate": "RRKHM777","mileage": 1400,"brand": "PEUGOT","model": "311"}
+    @PutMapping("/{licensePlate}")
+    public ResponseEntity<Car> updateCar(@PathVariable String licensePlate, @RequestBody Car car) {
+        Car updatedCar = carManager.updateCar(licensePlate, car);
         return ResponseEntity.ok(updatedCar);
     }
 
-    //DELETE: http://localhost:8080/api/cars/HA1234
-    @DeleteMapping("/{kennzeichen}")
-    public ResponseEntity<Void> deleteCar(@PathVariable String kennzeichen) {
-        carManager.deleteCarByKennzeichen(kennzeichen);
-        return ResponseEntity.ok().build();
-    }
 
-    //GET: http://localhost:8080/api/cars/HA1234
-    @GetMapping("/{kennzeichen}")
-    public ResponseEntity<Car> getCar(@PathVariable String kennzeichen) {
-        Optional<Car> car = carManager.getCar(kennzeichen);
-        if (car.isPresent()) {
-            return ResponseEntity.ok(car.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    //DELETE: http://localhost:8080/api/cars/HA1234
+    @DeleteMapping("/{licensePlate}")
+    public ResponseEntity<Void> deleteCar(@PathVariable String licensePlate) {
+        carManager.deleteCarByLicensePlate(licensePlate);
+        return ResponseEntity.ok().build();
     }
 }
