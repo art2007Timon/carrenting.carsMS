@@ -1,13 +1,11 @@
 package com.carrenting.car.ports.data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity         //eine Klasse ist eine JPA-Entität, was bedeutet, dass sie direkt mit einer Tabelle in der Datenbank übereinstimmt.
+@Table(name = "car")
 @Getter         //Automatische generierung
 @Setter         //Automatische generierung
 public class Car {
