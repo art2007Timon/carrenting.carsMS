@@ -28,14 +28,19 @@ public class CarService implements CarManager {
         return carRepository.findAll();
     }
 
+
     @Override
     public Car updateCar(String licensePlate, Car updatedCarData) {
         Car existingCar = carRepository.findByLicensePlate(licensePlate)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
 
         existingCar.setMileage(updatedCarData.getMileage());
+        existingCar.setBrand(updatedCarData.getBrand());
+        existingCar.setModel(updatedCarData.getModel());
+
         return carRepository.save(existingCar);
     }
+
 
     @Override
     @Transactional
