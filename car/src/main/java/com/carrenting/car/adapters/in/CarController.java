@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/cars")
+@RequestMapping("/api/car")
 public class CarController {
 
     private final CarManager carManager;    //Interface -> port.in
@@ -20,13 +20,13 @@ public class CarController {
         this.carManager = carManager;
     }
 
-    //GET: http://localhost:8080/api/cars
+    //GET: http://localhost:8080/api/car
     @GetMapping
     public ResponseEntity<List<Car>> getAllCars() {
         List<Car> cars = carManager.getAllCars();
         return ResponseEntity.ok(cars);
     }
-    //GET: http://localhost:8080/api/cars/RRKHM777
+    //GET: http://localhost:8080/api/car/RRKHM777
     @GetMapping("/{licensePlate}")
     public ResponseEntity<Car> getCar(@PathVariable String licensePlate) {
         Optional<Car> car = carManager.getCar(licensePlate);
@@ -34,7 +34,7 @@ public class CarController {
     }
 
 
-    //POST: http://localhost:8080/api/cars
+    //POST: http://localhost:8080/api/car
     //JSON: {"licensePlate": "RRKHM777","mileage": 1400,"brand": "PEUGOT","model": "311"} or with carID -> "carID" : 1
     @PostMapping//JSON
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
@@ -43,7 +43,7 @@ public class CarController {
     }
 
 
-    //PUT: http://localhost:8080/api/cars/RRKHM777
+    //PUT: http://localhost:8080/api/car/RRKHM777
     //JSON: {"licensePlate": "RRKHM777","mileage": 1400,"brand": "PEUGOT","model": "311"}
     @PutMapping("/{licensePlate}")
     public ResponseEntity<Car> updateCar(@PathVariable String licensePlate, @RequestBody Car car) {
@@ -52,7 +52,7 @@ public class CarController {
     }
 
 
-    //DELETE: http://localhost:8080/api/cars/HA1234
+    //DELETE: http://localhost:8080/api/car/HA1234
     @DeleteMapping("/{licensePlate}")
     public ResponseEntity<Void> deleteCar(@PathVariable String licensePlate) {
         carManager.deleteCarByLicensePlate(licensePlate);
